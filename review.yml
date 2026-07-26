@@ -1,0 +1,383 @@
+aid: aduna
+name: Aduna
+review:
+  question: Does Aduna publish a real, self-serve public developer surface for the CAMARA network APIs it aggregates?
+  answer: false
+  date: '2026-07-25'
+  reviewer: API Evangelist
+  tier: network-api-exposure
+  homeMarket: Sweden
+  gated: true
+findings:
+  summary: |
+    Aduna is the commercial exposure layer for CAMARA network APIs — a 50:50 joint venture, half
+    Ericsson (Stockholm, Sweden) and half twelve global operators, incorporated as Aduna Global,
+    LLC. Its job is to make CAMARA APIs reachable through one contract instead of many. It has
+    real product substance and it is not vapour: named CAMARA APIs, named live markets, named
+    carriers, named channel partners, and five source-available first-party SDK repositories on
+    GitHub whose source contains real endpoint paths, real OAuth scopes and a real CIBA flow.
+
+    But the developer surface itself is closed. adunaglobal.com is a marketing site with prose API
+    descriptions and no technical artifacts. docs.adunaglobal.com is GitBook-hosted and redirects
+    EVERY path — including /robots.txt and /sitemap.xml — to an Auth0 login wall at
+    portal.adunaglobal.com. The portal is an Angular single-page app that renders nothing without
+    authentication. There is no public OpenAPI, no sandbox, no self-serve signup, no published
+    base URL, no pricing and no rate-limit documentation. Aduna's own SDK README states the
+    onboarding procedure plainly: "Contact Aduna Global for the onboarding procedure of an ASP
+    Application." That is a sales conversation, not a signup form.
+
+    The honest read for a tier that exists specifically to make network APIs commercially
+    reachable: Aduna has moved further than a press release — Number Verification is genuinely
+    live across the three largest US carriers as of July 2026, and the SDKs prove a working
+    contract — but the developer-facing surface is still partner-gated, and a developer meets
+    Aduna through Vonage, Sinch, Infobip, Google Cloud or Azure Marketplace far more easily than
+    through Aduna itself.
+  domainNote: |
+    The domain aduna.global does NOT resolve (NXDOMAIN, no A record, no NS). The real primary
+    domain is adunaglobal.com. Recorded here because the profile was opened against aduna.global.
+  developerPortal:
+    url: https://portal.adunaglobal.com/
+    httpStatus: 200
+    verdict: login wall
+    note: |
+      Angular SPA. Server returns the same 6,141-byte shell ("Aduna Portal — Please enable
+      JavaScript to continue using this application.") for /, /login, /signup, /register,
+      /api-catalog, /apis, /docs, /openapi.json, /swagger.json and /api-docs. All routes are
+      client-side; nothing is readable anonymously. Identity provider is Auth0 tenant
+      prod-aduna-global.us.auth0.com.
+  documentation:
+    url: https://docs.adunaglobal.com/
+    httpStatus: 200
+    verdict: gated — redirects to login
+    hosting: GitBook (CNAME b20e1caec2-hosting.gitbook.io)
+    note: |
+      Every probed path 302s to
+      https://portal.adunaglobal.com/login?iss=https%3A%2F%2Fprod-aduna-global.us.auth0.com%2F
+      Real documentation paths were recovered from the portal's JavaScript bundle
+      (main-PHUVKAFR.js) and are listed under documentationPathsDiscovered. All are gated.
+  documentationPathsDiscovered:
+  - https://docs.adunaglobal.com/api-lifecycle
+  - https://docs.adunaglobal.com/how-to-enable-an-api/number-verification-api-v-2.1-landing-page
+  - https://docs.adunaglobal.com/guides/csp-onboarding/csp-onboarding
+  - https://docs.adunaglobal.com/guides/onward-provider-integration/onward-provider-integration
+  - https://docs.adunaglobal.com/guides/use-cases/sim-based-number-verification-api-v2.x-for-android
+  - https://docs.adunaglobal.com/legal/sub-processors-and-affiliates-csp
+  - https://docs.adunaglobal.com/legal/sub-processors-and-affiliates-op
+  openapi:
+    harvested: false
+    specsCount: 0
+    note: |
+      Aduna publishes NO OpenAPI definition of its own. Probes returned:
+      https://adunaglobal.com/openapi.json -> 404;
+      https://docs.adunaglobal.com/openapi.json -> 302 to the Auth0 login;
+      https://portal.adunaglobal.com/{openapi.json,swagger.json,api-docs,docs} -> 200 but SPA HTML,
+      not a spec; api.adunaglobal.com does not resolve.
+      Aduna's own Java SDK README cites the UPSTREAM CAMARA contract it implements at
+      https://github.com/camaraproject/NumberVerification/blob/r3.2/code/API_definitions/number-verification.yaml
+      That spec is CAMARA-published, not Aduna-published, and was deliberately NOT copied into
+      openapi/ so it is not miscredited to Aduna.
+  camara:
+    posture: >-
+      Commercial aggregator of CAMARA APIs with live deployments — Number Verification confirmed
+      live across AT&T, T-Mobile and Verizon in the US — but all specs, docs and onboarding are
+      partner-gated behind an Auth0 login; the only public technical artifacts are source-available
+      Number Verification v2 SDKs.
+    evidenceGrade: implementation (not merely a press release)
+    apisLiveOrInDevelopment:
+    - Number Verification
+    - SIM Swap
+    - KYC Match
+    apisAnnouncedRoadmap:
+    - Device Swap
+    - Call Forwarding Signal
+    - Scam Signal (SCAM Signals / Call State)
+    - SIM Swap Subscriptions
+    - KYC Tenure
+    - Number Recycling
+    - Device Reachability Status
+    - Device Roaming Status
+    - Device Reachability Status Subscription
+    - Device Roaming Status Subscription
+    - Device Location Verification
+    - Device Location Retrieval
+    - Device Geofencing Subscription
+    - Quality on Demand
+    - Connectivity Insights
+    - Dedicated Networks
+    - Population Density
+    - Region Device Count
+    - Rain Attenuation
+    apiSegmentsPublished:
+    - Security (https://adunaglobal.com/api-segments/security/)
+    - Identity (https://adunaglobal.com/api-segments/identity/)
+    - Location (https://adunaglobal.com/api-segments/location/)
+    - Device Information (https://adunaglobal.com/api-segments/device-information/)
+    - Data Connectivity (https://adunaglobal.com/api-segments/data-connectivity/)
+    - Network Insights (https://adunaglobal.com/api-segments/network-insights/)
+    marketsLive:
+    - United States
+    - Germany
+    - Spain
+    - Canada
+    - France
+    - Netherlands
+    marketsAnnounced:
+    - Australia
+    - Brazil
+    - India
+    - Greece
+    - Singapore
+    - Thailand
+    - United Kingdom
+    operatorReach: >-
+      Aduna states aggregation across 40 mobile operators globally, with more than 100 network
+      provider engagements claimed on its availability page.
+  openGateway:
+    participant: false
+    note: |
+      Aduna is not a mobile network operator and therefore does not appear as an operator
+      signatory on the GSMA Open Gateway list. Its own GitHub organisation profile names
+      "GSMA Open Gateway" as an ecosystem it builds upon, alongside CAMARA and Linux Foundation
+      Networking, and all twelve of its CSP shareholders are Open Gateway operators. Aduna is
+      best described as the commercial aggregation channel FOR Open Gateway, not a member OF it.
+      The GSMA Open Gateway page itself returned HTTP 403 to anonymous fetch and could not be
+      confirmed directly.
+  tmForum:
+    conformance: none found
+    note: No TM Forum Open API conformance certification (TMF620, TMF622, TMF641 or otherwise) is claimed anywhere on adunaglobal.com or in Aduna's public repositories.
+  threeGPPExposure:
+    nefOrScef: none published
+    note: |
+      Aduna abstracts operator network exposure but publishes nothing about NEF/SCEF, 5G network
+      slicing or edge/MEC APIs. The Dedicated Networks and Quality on Demand APIs on the roadmap
+      are the closest adjacent capability and are described only in marketing prose.
+  auth:
+    model: OAuth 2.0 / OpenID Connect, three flows
+    ciba: true
+    cibaEvidence: |
+      CONFIRMED. Aduna's public Java SDK declares POST /auth/bc-authorize (the CIBA backchannel
+      authentication endpoint) and ships a CibaResponse model class. The SDK README states
+      verbatim that v2.1 supports "SIM-based using both the JWT-Bearer Token flow and the CIBA
+      flow" and "network-based using the authorization code flow", and lists CIBA in its
+      abbreviations as "Client-Initiated Backchannel Authentication".
+    flows:
+    - network-based: OAuth 2.0 authorization code flow
+    - SIM-based: JWT-Bearer Token flow (recommended by Aduna) with ASP-hosted JWKS and key rotation
+    - SIM-based: CIBA (Client-Initiated Backchannel Authentication)
+    portalIdentityProvider:
+      issuer: https://prod-aduna-global.us.auth0.com/
+      wellKnown: https://prod-aduna-global.us.auth0.com/.well-known/openid-configuration
+      httpStatus: 200
+      note: |
+        This is the Auth0 tenant guarding the Aduna PORTAL and its docs, not the network-API
+        authorization server. It advertises authorization_code, token, device_authorization,
+        userinfo, revocation and dynamic registration endpoints, S256 PKCE, and
+        client_secret_basic / client_secret_post / private_key_jwt / none client auth. Its
+        scopes_supported are the stock Auth0 OIDC profile claims, not CAMARA scopes.
+    camaraScopesConfirmed:
+    - openid
+    - dpv:FraudPreventionAndDetection
+    - number-verification:verify
+    - number-verification:device-phone-number:read
+    scopeProvenance: |
+      Read verbatim from
+      https://github.com/adunaglobal/nv2-asp-server-java-aduna-sdk backend/src/main/java/com/adunaglobal/sdk/backend/configuration/NumberVerificationProperties.java
+  endpointsConfirmedFromFirstPartySdkSource:
+  - POST {baseURL}/auth/auth-info
+  - POST {baseURL}/auth/bc-authorize
+  - POST {baseURL}/auth/token
+  - POST {baseURL}/number-verification/v2/verify
+  - GET  {baseURL}/number-verification/v2/device-phone-number
+  baseUrlNote: |
+    No public base URL. In Aduna's Feign clients the host is the injected configuration property
+    ${com.adunaglobal.sdk.backend.connection.baseURL}, supplied to a partner at onboarding. No
+    host is asserted here because none is published.
+  headersConfirmed:
+  - Authorization
+  - X-Correlator
+  webhooks:
+    published: false
+    note: |
+      Four subscription-style APIs are ANNOUNCED as roadmap — SIM Swap Subscriptions, Device
+      Geofencing Subscription, Device Reachability Status Subscription, Device Roaming Status
+      Subscription — which in CAMARA implies a CloudEvents webhook callback. Aduna publishes no
+      event catalogue, no callback contract and no AsyncAPI. Nothing is asserted beyond the
+      product names.
+  sdks:
+    publiclyVisible: true
+    registryPublished: false
+    githubOrg: https://github.com/adunaglobal
+    orgCreated: '2026-01-05'
+    publicRepos: 6
+    license: Source-available under a proprietary Aduna license agreement (per-repo PDF), not open source.
+    packages: |
+      Not distributed through public package registries. npm has no adunanv2aspwebsdk (404) and
+      Maven Central has no com.adunaglobal group (0 results). Distribution is GitHub source only.
+    repositories:
+    - name: nv2-asp-server-java-aduna-sdk
+      language: Java
+      note: Spring Boot / Feign backend SDK for CAMARA Number Verification v2.1; richest public technical artifact Aduna has.
+    - name: nv2-asp-android-aduna-sdk
+      language: Kotlin
+      note: Android SDK for NV2, SIM-based and network-based authorization.
+    - name: nv2-asp-ios-aduna-sdk
+      language: Swift
+      note: iOS SDK for NV2.
+    - name: nv2-asp-web-aduna-sdk
+      language: TypeScript
+      note: Browser SDK for NV2; carries an openapitools.json generator config but no spec is committed.
+    - name: cac-ios-aduna-sdk
+      language: Swift
+      note: iOS XCFramework for CAMARA Number Verification v2 SIM-based authentication.
+    - name: .github
+      language: null
+      note: Organisation profile README; names CAMARA, GSMA Open Gateway and Linux Foundation Networking.
+  postman:
+    workspace: none found
+  graphql:
+    surface: none found
+  grpc:
+    protos: none found
+  channelToDevelopers:
+    directSelfServe: false
+    partnerPlatforms:
+    - Google Cloud
+    - Infobip
+    - Sinch
+    - Vonage
+    - Microsoft Azure and Azure Marketplace
+    - Comviva (Tech Mahindra) via AWS
+    - Bridge Alliance
+    note: |
+      This is the defining fact about Aduna's developer surface. Aduna's own materials describe
+      Google Cloud, Infobip, Sinch and Vonage as "developer partner platforms" and its APIs are
+      surfaced as native Microsoft services via partners in the Azure Marketplace. A developer
+      almost always reaches an Aduna-aggregated CAMARA API through a CPaaS or hyperscaler
+      catalogue, not through adunaglobal.com.
+  ownership:
+    structure: 50:50 joint venture
+    ericssonStake: 50%
+    cspStake: 50% held by twelve communications service providers
+    shareholders:
+    - AT&T
+    - Bharti Airtel
+    - Deutsche Telekom
+    - Ericsson
+    - KDDI
+    - Orange
+    - Reliance Jio
+    - Singtel
+    - Telefonica
+    - Telstra
+    - T-Mobile
+    - Verizon
+    - Vodafone
+    later: e& announced as an equity partner after the initial close.
+    ceo: Anthony Bartolo (appointed January 2025; previously COO of Vonage)
+    transactionCompleted: '2025-07'
+    entity: Aduna Global, LLC
+    homeMarketNote: |
+      Home market recorded as Sweden on Ericsson lineage — Ericsson is the 50% parent, the
+      venture was announced from Stockholm, and Ericsson supplies the underlying network
+      exposure. The operating entity is a US-registered LLC and the GitHub organisation lists
+      Canada, so "Swedish company" is true of its parentage and control, not of its registration.
+transports:
+- protocol: REST
+  scheme: https
+  documented: partner-gated
+  note: |
+    CAMARA REST over HTTPS. Endpoint paths confirmed from first-party SDK source; the host is
+    supplied at onboarding and is not published.
+- protocol: OIDC/CIBA
+  scheme: https
+  documented: partner-gated
+  note: POST /auth/bc-authorize confirmed in Aduna's public Java SDK.
+- protocol: Webhook
+  scheme: https
+  documented: false
+  note: Subscription APIs are announced as roadmap; no callback contract is published.
+- protocol: GraphQL
+  documented: false
+- protocol: gRPC
+  documented: false
+- protocol: WebSocket
+  documented: false
+probes:
+- url: https://aduna.global/
+  status: DNS NXDOMAIN
+  note: Does not resolve. Not Aduna's domain.
+- url: https://adunaglobal.com/
+  status: 200
+  note: Marketing site. Six API segment pages, use-case pages, availability page, resources/newsroom.
+- url: https://adunaglobal.com/openapi.json
+  status: 404
+- url: https://docs.adunaglobal.com/
+  status: 302 -> portal login (200 after redirect)
+- url: https://docs.adunaglobal.com/robots.txt
+  status: 302 -> portal login
+- url: https://docs.adunaglobal.com/sitemap.xml
+  status: 302 -> portal login
+- url: https://portal.adunaglobal.com/
+  status: 200
+  note: Angular SPA shell only.
+- url: https://portal.adunaglobal.com/openapi.json
+  status: 200
+  note: SPA HTML, not a spec.
+- url: https://portal.adunaglobal.com/swagger.json
+  status: 200
+  note: SPA HTML, not a spec.
+- url: https://portal.adunaglobal.com/api-docs
+  status: 200
+  note: SPA HTML, not a spec.
+- url: https://api.adunaglobal.com/
+  status: DNS NXDOMAIN
+- url: https://developer.adunaglobal.com/
+  status: DNS NXDOMAIN
+- url: https://developers.adunaglobal.com/
+  status: DNS NXDOMAIN
+- url: https://prod-aduna-global.us.auth0.com/.well-known/openid-configuration
+  status: 200
+  note: Portal identity provider (Auth0), JSON returned.
+- url: https://github.com/adunaglobal
+  status: 200
+  note: First-party organisation, 6 public source-available repositories.
+sources:
+- url: https://adunaglobal.com/
+  type: Website
+  note: Company positioning, six API segments, use cases.
+- url: https://adunaglobal.com/api-segments/security/
+  type: Documentation
+  note: Number Verification and SIM Swap product descriptions.
+- url: https://adunaglobal.com/api-segments/identity/
+  type: Documentation
+  note: KYC Match API description.
+- url: https://adunaglobal.com/api-segments/location/
+  type: Documentation
+  note: Device Location Verification, Device Location Retrieval, Device Geofencing Subscription roadmap.
+- url: https://adunaglobal.com/api-segments/device-information/
+  type: Documentation
+  note: Device Reachability Status, Device Roaming Status and their subscription variants.
+- url: https://adunaglobal.com/api-segments/data-connectivity/
+  type: Documentation
+  note: Quality on Demand, Connectivity Insights, Dedicated Networks.
+- url: https://adunaglobal.com/api-segments/network-insights/
+  type: Documentation
+  note: Population Density, Region Device Count, Rain Attenuation.
+- url: https://adunaglobal.com/work-with-us/availability/
+  type: Documentation
+  note: APIs live or in development vs available soon; operator logo set; global reach claim.
+- url: https://github.com/adunaglobal/nv2-asp-server-java-aduna-sdk
+  type: SourceCode
+  note: Endpoint paths, OAuth scopes, CIBA flow, onboarding instruction ("Contact Aduna Global").
+- url: https://github.com/adunaglobal/.github
+  type: SourceCode
+  note: Organisation profile naming CAMARA, GSMA Open Gateway, Linux Foundation Networking; ownership list.
+- url: https://github.com/camaraproject/NumberVerification
+  type: Specification
+  note: Upstream CAMARA contract Aduna's SDK implements (r3.2). CAMARA-published, not Aduna-published.
+- url: https://www.prnewswire.com/news-releases/aduna-accelerates-global-network-api-adoption-with-major-ecosystem-expansion-at-mwc-302702813.html
+  type: PressRelease
+  note: 2026-03-03. Live and announced markets, 40 operators, developer partner platforms.
+- url: https://www.ericsson.com/en/press-releases/2025/7/ericsson-announces-completion-of-aduna-transaction
+  type: PressRelease
+  note: 2025-07. Completion of the 50:50 joint venture with twelve CSPs.

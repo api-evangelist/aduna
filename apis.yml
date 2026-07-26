@@ -1,0 +1,146 @@
+aid: aduna
+url: https://raw.githubusercontent.com/api-evangelist/aduna/refs/heads/main/apis.yml
+name: Aduna
+kind: company
+description: >-
+  Aduna is the Ericsson-led network API joint venture — a 50:50 company owned half by Ericsson
+  (Stockholm, Sweden) and half by twelve global communications service providers including AT&T,
+  Bharti Airtel, Deutsche Telekom, KDDI, Orange, Reliance Jio, Singtel, Telefonica, Telstra,
+  T-Mobile, Verizon and Vodafone, with e& added later as an equity partner. Announced from
+  Stockholm and incorporated as Aduna Global, LLC, it exists to aggregate CAMARA-standardised
+  mobile network APIs from many carriers into one commercial channel so that developers do not
+  have to negotiate operator by operator. Aduna sits in the exposure layer of the telecom value
+  chain: it does not own spectrum and it does not sell to developers directly at scale — it
+  aggregates operator capability and reaches the market through partner platforms (Google Cloud,
+  Infobip, Sinch, Vonage, Microsoft Azure and the Azure Marketplace, Comviva on AWS, Bridge
+  Alliance). Its API posture is honestly partner-gated. The public website documents an API
+  catalogue in prose but publishes no OpenAPI, no sandbox and no self-serve signup; the developer
+  documentation at docs.adunaglobal.com redirects every path to an Auth0 login wall at
+  portal.adunaglobal.com, and the SDK onboarding instruction is to contact Aduna Global. The one
+  genuinely open surface is a small set of source-available first-party SDK repositories on GitHub
+  for CAMARA Number Verification v2, which are the only place Aduna's real endpoints, OAuth scopes
+  and CIBA flow are publicly visible.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- Telecommunications
+- Sweden
+- Network APIs
+- CAMARA
+- Open Gateway
+- API Aggregator
+- Identity Verification
+- SIM Swap
+- Number Verification
+- Fraud Prevention
+- Quality on Demand
+- Device Location
+- Ericsson
+created: '2026-07-25'
+modified: '2026-07-25'
+specificationVersion: '0.19'
+apis:
+- aid: aduna:aduna-number-verification-api
+  name: Aduna Number Verification API
+  description: >-
+    Aduna's aggregated implementation of the CAMARA Number Verification API (v2.1), confirming
+    possession of a mobile phone number in real time by verifying it directly against the carrier
+    network with minimal or no user input, as a replacement for SMS one-time passwords. Aduna
+    states this API is live, including a July 2026 launch across AT&T, T-Mobile and Verizon in the
+    United States. The contract exposes verify and read (device-phone-number) operations and is
+    reached through network-based (authorization code) or SIM-based (JWT-Bearer and CIBA)
+    authorization. Endpoint paths and OAuth scopes are visible in Aduna's public SDK source; the
+    base URL is a deployment configuration value and is not published.
+  humanURL: https://adunaglobal.com/api-segments/security/
+  tags:
+  - Number Verification
+  - Authentication
+  - CAMARA
+  - Fraud Prevention
+  properties:
+  - type: Documentation
+    url: https://adunaglobal.com/api-segments/security/
+  - type: APIReference
+    url: https://docs.adunaglobal.com/how-to-enable-an-api/number-verification-api-v-2.1-landing-page
+  - type: SDK
+    url: https://github.com/adunaglobal/nv2-asp-server-java-aduna-sdk
+  - type: SDK
+    url: https://github.com/adunaglobal/nv2-asp-android-aduna-sdk
+  - type: SDK
+    url: https://github.com/adunaglobal/nv2-asp-ios-aduna-sdk
+  - type: SDK
+    url: https://github.com/adunaglobal/nv2-asp-web-aduna-sdk
+  - type: SDK
+    url: https://github.com/adunaglobal/cac-ios-aduna-sdk
+  - type: Specification
+    url: https://github.com/camaraproject/NumberVerification/blob/r3.2/code/API_definitions/number-verification.yaml
+- aid: aduna:aduna-sim-swap-api
+  name: Aduna SIM Swap API
+  description: >-
+    Aduna's aggregated implementation of the CAMARA SIM Swap API, returning real-time information
+    about recent SIM card changes associated with a mobile phone number so an application can
+    detect account-takeover risk and trigger additional security checks. Aduna lists this API as
+    currently live or in development. A SIM Swap Subscriptions variant, which would push
+    notifications rather than answer one-time queries, is listed as available soon. No OpenAPI
+    definition, base URL or sandbox is published publicly; the reference documentation sits behind
+    the Auth0 login wall on the Aduna portal.
+  humanURL: https://adunaglobal.com/api-segments/security/
+  tags:
+  - SIM Swap
+  - Fraud Prevention
+  - CAMARA
+  - Security
+  properties:
+  - type: Documentation
+    url: https://adunaglobal.com/api-segments/security/
+  - type: APIReference
+    url: https://docs.adunaglobal.com/
+  - type: Specification
+    url: https://github.com/camaraproject/SimSwap
+- aid: aduna:aduna-kyc-match-api
+  name: Aduna KYC Match API
+  description: >-
+    Aduna's aggregated implementation of the CAMARA KYC Match API, comparing customer-supplied
+    identity attributes — name, phone number, birthdate, address, email — against the verified KYC
+    data held by the user's mobile network operator, returning match results without returning
+    personally identifiable information to the caller. Aduna lists this API as currently live or in
+    development. No OpenAPI definition, base URL or sandbox is published publicly; the reference
+    documentation sits behind the Auth0 login wall on the Aduna portal.
+  humanURL: https://adunaglobal.com/api-segments/identity/
+  tags:
+  - KYC
+  - Identity Verification
+  - CAMARA
+  - Onboarding
+  properties:
+  - type: Documentation
+    url: https://adunaglobal.com/api-segments/identity/
+  - type: APIReference
+    url: https://docs.adunaglobal.com/
+common:
+- type: Website
+  url: https://adunaglobal.com/
+- type: Documentation
+  url: https://docs.adunaglobal.com/
+- type: DeveloperPortal
+  url: https://portal.adunaglobal.com/
+- type: GitHubOrganization
+  url: https://github.com/adunaglobal
+- type: LinkedIn
+  url: https://www.linkedin.com/company/adunaglobal/
+- type: Blog
+  url: https://adunaglobal.com/resources/
+- type: PressReleases
+  url: https://adunaglobal.com/resources/?contentType=Newsroom
+- type: Contact
+  url: https://adunaglobal.com/contact-us/
+- type: TermsOfService
+  url: https://adunaglobal.com/terms-of-use/
+- type: PrivacyPolicy
+  url: https://adunaglobal.com/privacy-notice/
+- type: CodeOfConduct
+  url: https://adunaglobal.com/code-of-conduct/
+- type: Availability
+  url: https://adunaglobal.com/work-with-us/availability/
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
