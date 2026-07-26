@@ -117,6 +117,36 @@ apis:
   - type: APIReference
     url: https://docs.adunaglobal.com/
 common:
+- type: Authentication
+  url: authentication/aduna-authentication.yml
+- type: OAuthScopes
+  url: scopes/aduna-scopes.yml
+- type: Conventions
+  url: conventions/aduna-conventions.yml
+- type: ErrorCatalog
+  url: errors/aduna-problem-types.yml
+- type: DataModel
+  url: data-model/aduna-data-model.yml
+- type: Conformance
+  url: conformance/aduna-conformance.yml
+- type: Lifecycle
+  url: lifecycle/aduna-lifecycle.yml
+- type: ChangeLog
+  url: changelog/aduna-changelog.yml
+- type: Packages
+  url: packages/aduna-packages.yml
+- type: SDKs
+  url: packages/aduna-packages.yml
+- type: WellKnown
+  url: well-known/aduna-well-known.yml
+- type: LLMsTxt
+  url: llms/aduna-llms.txt
+- type: DomainSecurity
+  url: security/aduna-domain-security.yml
+- type: VulnerabilityDisclosure
+  url: security/aduna-vulnerability-disclosure.yml
+- type: Security
+  url: https://github.com/adunaglobal
 - type: Website
   url: https://adunaglobal.com/
 - type: Documentation
@@ -133,6 +163,14 @@ common:
   url: https://adunaglobal.com/resources/?contentType=Newsroom
 - type: Contact
   url: https://adunaglobal.com/contact-us/
+- type: Support
+  url: https://adunaglobal.com/contact-us/
+- type: Login
+  url: https://portal.adunaglobal.com/login
+- type: Roadmap
+  url: https://adunaglobal.com/work-with-us/availability/
+- type: SourceCode
+  url: https://github.com/adunaglobal/nv2-asp-server-java-aduna-sdk
 - type: TermsOfService
   url: https://adunaglobal.com/terms-of-use/
 - type: PrivacyPolicy

@@ -1,0 +1,65 @@
+generated: '2026-07-25'
+method: derived
+source: https://github.com/adunaglobal/nv2-asp-server-java-aduna-sdk
+format: camara
+rfc9457: false
+note: >-
+  Aduna publishes no OpenAPI and no public error reference, so this catalogue is derived from the
+  error model classes and exception types in Aduna's own source-available Java SDK. It captures the
+  two error ENVELOPES Aduna returns and the SDK-side exception taxonomy. The specific code strings
+  Aduna returns inside the CAMARA envelope are not published anywhere public and are deliberately
+  NOT enumerated here — the upstream CAMARA Number Verification specification defines the
+  standard code set Aduna implements.
+envelopes:
+- name: CamaraErrorResponse
+  applies_to:
+  - POST /number-verification/v2/verify
+  - GET /number-verification/v2/device-phone-number
+  content_type: application/json
+  fields:
+  - name: status
+    type: integer
+    description: HTTP response status code.
+  - name: code
+    type: string
+    description: A human-readable code describing the error.
+  - name: message
+    type: string
+    description: A human-readable detailed message of the error.
+  source: backend/src/main/java/com/adunaglobal/sdk/backend/client/data/CamaraErrorResponse.java
+- name: AuthenticationErrorResponse
+  applies_to:
+  - POST /auth/auth-info
+  - POST /auth/bc-authorize
+  - POST /auth/token
+  content_type: application/json
+  fields:
+  - name: error
+    type: string
+    description: The OAuth 2.0 error code.
+  - name: error_description
+    type: string
+    description: A detailed error message.
+  source: backend/src/main/java/com/adunaglobal/sdk/backend/client/data/AuthenticationErrorResponse.java
+sdk_exceptions:
+- name: SDKException
+  description: Base exception for all SDK-raised failures.
+- name: SDKAuthException
+  description: Raised when the authorization flow fails (4xx/5xx from the /auth endpoints).
+- name: SDKInvalidValueException
+  description: Raised on invalid caller input, e.g. a verify without a phone number or a read without a PLMN ID.
+- name: SDKInternalErrorException
+  description: Raised on an unexpected internal failure inside the SDK.
+- name: SDKDisabledByConfigurationException
+  description: Raised when a capability is invoked that the SDK configuration has disabled.
+handling_rules:
+- rule: Any API error response on verify or read always raises an exception.
+  source: https://github.com/adunaglobal/nv2-asp-server-java-aduna-sdk#dual-sim-support
+- rule: >-
+    In a dual-SIM configuration, a 4xx on an AUTHORIZATION request for one operator token is
+    ignored if the other operator token succeeded. If both fail with 4xx, that 4xx is raised.
+- rule: >-
+    HTTP 4xx/5xx responses are logged at ERROR level by the SDK (stacktrace only when DEBUG logging
+    is enabled on the response-handling class).
+- rule: Quote the X-Correlator UUID for the failing request when escalating to Aduna support.
+upstream_specification: https://github.com/camaraproject/NumberVerification/blob/r3.2/code/API_definitions/number-verification.yaml

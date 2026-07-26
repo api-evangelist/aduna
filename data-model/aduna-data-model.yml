@@ -1,0 +1,112 @@
+generated: '2026-07-25'
+method: derived
+source: https://github.com/adunaglobal/nv2-asp-server-java-aduna-sdk
+note: >-
+  Derived from the request/response model classes in Aduna's own source-available Java SDK, since
+  Aduna publishes no OpenAPI. Field names are read verbatim from the SDK's serialised data classes;
+  types are the declared Java types. This covers the Number Verification v2 surface plus the Aduna
+  authorization surface that fronts it — the only two Aduna contracts visible publicly.
+entities:
+- name: AuthInfoRequestData
+  domain: authorization
+  operation: POST /auth/auth-info
+  fields:
+  - {name: phoneNumber, type: string, note: Required for the verify operation.}
+  - {name: plmnId, type: string, note: Required for the read (device-phone-number) operation.}
+  - {name: scopes, type: string, note: Space-delimited scope string; see scopes/aduna-scopes.yml.}
+  - {name: appId, type: string, note: Aduna Application ID issued at onboarding.}
+  - {name: appName, type: string}
+  - {name: appCallbackUrl, type: string}
+  - {name: nonce, type: string}
+  - {name: vpRequest, type: VPRequestData}
+  - {name: state, type: string, note: Required for the network-based option.}
+  - {name: redirectUrl, type: string, note: Must be pre-registered with Aduna at onboarding; validated per request.}
+- name: AuthInfoData
+  domain: authorization
+  operation: POST /auth/auth-info (response)
+  fields:
+  - {name: networkBasedAuthZData, type: NetworkBasedAuthZData}
+  - {name: simBasedAuthZData, type: SimBasedAuthZData}
+- name: NetworkBasedAuthZData
+  domain: authorization
+  fields:
+  - {name: url, type: string, note: Invocation URL the device follows through a 302 chain to a final 200.}
+- name: SimBasedAuthZData
+  domain: authorization
+  fields:
+  - {name: iosAppClipUrl, type: string}
+  - {name: androidAppUrl, type: string}
+  - {name: appInfoJwt, type: string}
+  - {name: appInfoJwtQueryParameterName, type: string}
+  - {name: appCallbackQueryParameterName, type: string}
+  - {name: vpResponse, type: Credential}
+- name: CibaResponse
+  domain: authorization
+  operation: POST /auth/bc-authorize (response)
+  fields:
+  - {name: authReqId, type: string}
+  - {name: interval, type: integer, note: Polling interval in seconds.}
+  - {name: expiresIn, type: integer}
+- name: AccessToken
+  domain: authorization
+  operation: POST /auth/token (response)
+  fields:
+  - {name: token, type: string}
+  - {name: type, type: string}
+  - {name: expiresIn, type: integer}
+  - {name: acquisitionMode, type: enum, values: [AUTHORIZATION_CODE, CIBA, JWT_BEARER_TOKEN]}
+- name: NumberVerificationVerifyRequestData
+  domain: number-verification
+  operation: POST /number-verification/v2/verify
+  fields:
+  - {name: phoneNumber, type: string, note: Plain E.164 phone number to verify.}
+  - {name: hashedPhoneNumber, type: string, note: Hashed alternative to phoneNumber; the CAMARA contract accepts either form.}
+- name: NumberVerificationVerifyResponseData
+  domain: number-verification
+  operation: POST /number-verification/v2/verify (response)
+  fields:
+  - {name: devicePhoneNumberVerified, type: boolean}
+- name: NumberVerificationReadResponseData
+  domain: number-verification
+  operation: GET /number-verification/v2/device-phone-number (response)
+  fields:
+  - {name: devicePhoneNumber, type: string}
+- name: DeviceInfo
+  domain: number-verification
+  fields:
+  - {name: phoneNumber, type: string}
+  - {name: plmnId, type: Plmn}
+  - {name: language, type: string, note: Drives the lang query parameter on auth-info.}
+- name: Plmn
+  domain: network
+  fields:
+  - {name: mcc, type: string, note: Mobile Country Code.}
+  - {name: mnc, type: string, note: Mobile Network Code.}
+- name: CamaraErrorResponse
+  domain: errors
+  fields:
+  - {name: status, type: integer}
+  - {name: code, type: string}
+  - {name: message, type: string}
+relationships:
+- {from: AuthInfoData, to: NetworkBasedAuthZData, kind: has_one, via: networkBasedAuthZData}
+- {from: AuthInfoData, to: SimBasedAuthZData, kind: has_one, via: simBasedAuthZData}
+- {from: AuthInfoRequestData, to: VPRequestData, kind: has_one, via: vpRequest}
+- {from: SimBasedAuthZData, to: Credential, kind: has_one, via: vpResponse}
+- {from: DeviceInfo, to: Plmn, kind: has_one, via: plmnId}
+- {from: AccessToken, to: NumberVerificationVerifyRequestData, kind: authorizes, via: 'Authorization: Bearer'}
+- {from: AuthInfoData, to: AccessToken, kind: precedes, via: 'the chosen authorization option yields the token'}
+flow:
+- step: 1
+  call: POST /auth/auth-info
+  produces: AuthInfoData
+  note: Returns the authorization options available for the phone number or PLMN.
+- step: 2
+  call: network-based redirect chain OR POST /auth/bc-authorize + POST /auth/token OR JWT-Bearer assertion to POST /auth/token
+  produces: AccessToken
+- step: 3
+  call: POST /number-verification/v2/verify OR GET /number-verification/v2/device-phone-number
+  produces: NumberVerificationVerifyResponseData / NumberVerificationReadResponseData
+related:
+  conventions: conventions/aduna-conventions.yml
+  authentication: authentication/aduna-authentication.yml

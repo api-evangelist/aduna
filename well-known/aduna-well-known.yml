@@ -1,0 +1,76 @@
+generated: '2026-07-25'
+method: searched
+source: live probes of every Aduna host found in apis.yml
+note: >-
+  Aduna publishes no /.well-known/security.txt and no /.well-known/api-catalog. The two documents
+  that do return 200 on adunaglobal.com are the Umbraco CMS member-authentication discovery
+  documents for the marketing website — they are NOT the authorization server for the CAMARA
+  network APIs. The network-API authorization endpoints (/auth/auth-info, /auth/bc-authorize,
+  /auth/token) sit on a partner-supplied base URL that Aduna does not publish, and that host
+  therefore could not be probed. The Auth0 tenant document is the identity provider guarding the
+  Aduna developer portal and its documentation.
+hosts:
+- host: https://adunaglobal.com
+  role: marketing website (Umbraco CMS)
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 200
+    file: aduna-openid-configuration.json
+    note: Umbraco Delivery API member authentication; issuer https://adunaglobal.com/
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: aduna-oauth-authorization-server.json
+    note: Identical payload to the openid-configuration document.
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/jwks.json
+    status: 404
+- host: https://docs.adunaglobal.com
+  role: developer documentation (GitBook)
+  documents:
+  - path: /.well-known/security.txt
+    status: 302
+    note: Redirects to the Auth0 login wall at portal.adunaglobal.com; every path on this host is gated.
+  - path: /llms.txt
+    status: 302
+    note: Redirects to the Auth0 login wall.
+- host: https://portal.adunaglobal.com
+  role: developer portal (Angular SPA)
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 200
+    note: Returns the SPA HTML shell, not JSON. Not a discovery document.
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    note: Returns the SPA HTML shell, not JSON.
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    note: Returns the SPA HTML shell, not JSON.
+- host: https://prod-aduna-global.us.auth0.com
+  role: identity provider for the Aduna developer portal and documentation
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 200
+    file: aduna-portal-auth0-openid-configuration.json
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    note: Auth0 serves the same discovery payload at this path; not saved separately.
+  - path: /.well-known/jwks.json
+    status: 200
+    note: Auth0 signing keys; rotating material, not archived here.
+- host: https://api.adunaglobal.com
+  role: not resolvable
+  documents:
+  - path: /
+    status: DNS NXDOMAIN
+asp_side_requirement:
+  note: >-
+    Aduna's Java SDK README requires the INTEGRATOR (the ASP backend) to publish its own
+    /.well-known/openid-configuration (issuer, jwks_uri, subject_types_supported) plus a /jwks
+    endpoint so Aduna can verify the JWT-Bearer assertions it receives. This is a well-known
+    surface Aduna consumes, not one it publishes.
+  source: https://github.com/adunaglobal/nv2-asp-server-java-aduna-sdk#endpoint-dependencies

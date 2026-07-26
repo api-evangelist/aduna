@@ -1,0 +1,78 @@
+generated: '2026-07-25'
+method: searched
+source: https://github.com/adunaglobal
+note: >-
+  Aduna ships five first-party client SDKs for the CAMARA Number Verification v2 API. None of them
+  is published to a public package registry — distribution is GitHub source only, under a
+  per-repository source-available proprietary licence ("Aduna ASP SDK Source Available Software
+  License Agreement"), not an OSI open-source licence. Registry probes on 2026-07-25: npm
+  https://registry.npmjs.org/adunanv2aspwebsdk returned 404; Maven Central solrsearch for
+  g:"com.adunaglobal" returned numFound 0. The Maven coordinates below are declared in the SDK's
+  own pom.xml but are not resolvable from Maven Central.
+registry_probes:
+- registry: npm
+  query: adunanv2aspwebsdk
+  status: 404
+- registry: maven-central
+  query: 'g:"com.adunaglobal"'
+  result: numFound 0
+- registry: cocoapods
+  result: not published (iOS SDKs distributed as GitHub XCFramework/Swift package releases)
+packages:
+- language: java
+  registry: github
+  name: com.adunaglobal.sdk.backend:asp-sdk-backend
+  repository: https://github.com/adunaglobal/nv2-asp-server-java-aduna-sdk
+  url: https://github.com/adunaglobal/nv2-asp-server-java-aduna-sdk
+  latest_release: 1.1.0
+  released: '2026-06-23'
+  install: Clone the repository and build with Maven; not resolvable from Maven Central.
+  official: true
+  license: Aduna ASP SDK Source Available Software License Agreement (proprietary, source-available)
+  description: >-
+    Spring Boot / OpenFeign backend SDK for CAMARA Number Verification v2.1. Provides high-level,
+    low-level and raw (Feign) API layers, JWT-Bearer key management and rotation, CIBA support,
+    dual-SIM handling and a metering interface. Requires Java 21 and Spring Boot 3.5.
+- language: typescript
+  registry: github
+  name: adunanv2aspwebsdk
+  repository: https://github.com/adunaglobal/nv2-asp-web-aduna-sdk
+  url: https://github.com/adunaglobal/nv2-asp-web-aduna-sdk
+  latest_release: 0.1.2
+  released: '2026-06-23'
+  install: Install from the GitHub repository; the package name is not present on npm.
+  official: true
+  license: Aduna source-available licence (per-repository PDF)
+  description: Browser SDK for CAMARA Number Verification v2 (NV ASP SDK). Peer dependency rxjs ^7.
+- language: kotlin
+  registry: github
+  name: sdk-nv2-asp-android
+  repository: https://github.com/adunaglobal/nv2-asp-android-aduna-sdk
+  url: https://github.com/adunaglobal/nv2-asp-android-aduna-sdk
+  latest_release: 0.1.2
+  released: '2026-06-22'
+  official: true
+  license: Aduna source-available licence (per-repository PDF)
+  description: Android SDK for CAMARA Number Verification v2, covering SIM-based and network-based authorization.
+- language: swift
+  registry: github
+  name: sdk-nv2-asp-ios
+  repository: https://github.com/adunaglobal/nv2-asp-ios-aduna-sdk
+  url: https://github.com/adunaglobal/nv2-asp-ios-aduna-sdk
+  latest_release: 0.1.1
+  released: '2026-04-09'
+  official: true
+  license: Aduna source-available licence (per-repository PDF)
+  description: iOS SDK for CAMARA Number Verification v2.
+- language: swift
+  registry: github
+  name: aduna-sdk (cac-ios)
+  repository: https://github.com/adunaglobal/cac-ios-aduna-sdk
+  url: https://github.com/adunaglobal/cac-ios-aduna-sdk
+  latest_release: 0.10.0
+  released: '2026-07-07'
+  official: true
+  license: Aduna source-available licence (per-repository PDF)
+  description: >-
+    iOS structured XCFramework fulfilling the end-to-end SIM-based authentication flow for CAMARA
+    Number Verification v2. The most actively released of the five SDKs.

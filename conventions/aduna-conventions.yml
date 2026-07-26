@@ -1,0 +1,85 @@
+generated: '2026-07-25'
+method: searched
+source: https://github.com/adunaglobal/nv2-asp-server-java-aduna-sdk
+note: >-
+  Cross-cutting request/response semantics for the Aduna platform, read from Aduna's own
+  source-available Java SDK (Feign clients, configuration classes, README) because Aduna publishes
+  no OpenAPI and its reference documentation is behind an Auth0 login wall. Aduna's surface is a
+  CAMARA implementation, so most conventions are the CAMARA/GSMA Open Gateway conventions as Aduna
+  applies them.
+authentication:
+  style: OAuth 2.0 bearer token, three flows (authorization code, JWT-Bearer, CIBA)
+  header: 'Authorization: Bearer <access token>'
+  detail: authentication/aduna-authentication.yml
+request_tracing:
+  header: X-Correlator
+  required: true
+  format: random UUID, generated per request
+  scope: sent on both the /auth/* authorization calls and the CAMARA resource calls
+  note: >-
+    The SDK generates a fresh X-Correlator for every request, logs it at DEBUG before the call and
+    includes it in the metering event. It is the correlation key to quote to Aduna support.
+  source: https://github.com/adunaglobal/nv2-asp-server-java-aduna-sdk#x-correlator
+idempotency:
+  supported: unknown
+  documented: false
+  note: >-
+    Aduna documents no idempotency key, no Idempotency-Key header and no replay window. The two
+    Number Verification operations are a POST verify and a GET read; the SDK's dual-SIM logic
+    deliberately RE-ISSUES a verify request with a second operator token when the first returns no
+    match, which implies no idempotency guard on that endpoint. Recorded as absent rather than
+    assumed.
+pagination:
+  supported: false
+  note: Both published operations return a single scalar result; there is no collection endpoint and no pagination.
+versioning:
+  scheme: uri-path
+  pattern: /number-verification/v{major}/...
+  current: v2 (CAMARA Number Verification v2.1, release r3.2)
+  aduna_authorization_apis: v1.4.0
+  note: >-
+    Aduna tracks the CAMARA release train. The SDK README carries an explicit "Aduna/Camara Release
+    Compatibility" table binding an SDK version to an Aduna Authorization API version and a CAMARA
+    API release.
+  detail: lifecycle/aduna-lifecycle.yml
+error_envelope:
+  camara:
+    fields: [status, code, message]
+    content_type: application/json
+    note: CAMARA error shape (integer HTTP status, human-readable code, detailed message). Not RFC 9457.
+  authorization:
+    fields: [error, error_description]
+    note: Standard OAuth 2.0 error response on the /auth/* endpoints.
+  detail: errors/aduna-problem-types.yml
+content_types:
+  request:
+  - application/json (auth-info, verify)
+  - application/x-www-form-urlencoded (bc-authorize, token)
+  response:
+  - application/json
+metering:
+  published: true
+  note: >-
+    Aduna instruments the SDK with a Metering interface that emits one event per outbound HTTP
+    request. Fields: applicationId, startTime, elapedTime, apiName, apiOperation, httpMethod,
+    httpXCorrelator, httpStatus, httpAuthenticationMode. This is the commercial usage signal that
+    substitutes for a published rate-limit contract.
+  source: https://github.com/adunaglobal/nv2-asp-server-java-aduna-sdk#metering
+rate_limiting:
+  documented: false
+  note: No rate-limit headers, quotas or throttling policy are published; limits are set per partner contract.
+localization:
+  parameter: lang
+  scope: POST /auth/auth-info
+  note: Language for the operator-facing authorization experience, passed as a query parameter.
+retry_semantics:
+  note: >-
+    For verify and read requests any API error response raises an exception. Only a 4xx on an
+    AUTHORIZATION request may be swallowed by the SDK, and only in the dual-SIM case where the
+    other operator token still succeeded.
+related:
+  authentication: authentication/aduna-authentication.yml
+  scopes: scopes/aduna-scopes.yml
+  errors: errors/aduna-problem-types.yml
+  lifecycle: lifecycle/aduna-lifecycle.yml
+  data_model: data-model/aduna-data-model.yml

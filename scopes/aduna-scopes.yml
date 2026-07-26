@@ -1,0 +1,54 @@
+generated: '2026-07-25'
+method: searched
+source: >-
+  https://github.com/adunaglobal/nv2-asp-server-java-aduna-sdk/blob/main/backend/src/main/java/com/adunaglobal/sdk/backend/configuration/NumberVerificationProperties.java
+docs: https://docs.adunaglobal.com/how-to-enable-an-api/number-verification-api-v-2.1-landing-page
+docs_gated: true
+note: >-
+  Aduna publishes no OpenAPI and its scope reference sits behind the portal login wall. These
+  scopes are read verbatim from the default values in Aduna's own source-available Java SDK
+  configuration class and are restated in the SDK README configuration table. They follow the
+  CAMARA convention of pairing an OIDC scope with a W3C DPV purpose and a per-operation API scope.
+  Only the Number Verification API's scopes are publicly visible; the SIM Swap, KYC Match and
+  roadmap APIs will have their own CAMARA scopes but none are published.
+schemes:
+- name: Aduna authorization (network- and SIM-based)
+  source: authentication/aduna-authentication.yml
+  flows:
+  - flow: authorizationCode
+    tokenUrl: '{baseURL}/auth/token'
+  - flow: urn:ietf:params:oauth:grant-type:jwt-bearer
+    tokenUrl: '{baseURL}/auth/token'
+  - flow: ciba
+    backchannelAuthorizationUrl: '{baseURL}/auth/bc-authorize'
+    tokenUrl: '{baseURL}/auth/token'
+scopes:
+- scope: openid
+  description: OpenID Connect authentication; required on every Aduna Number Verification request.
+  kind: oidc
+  operations: [verify, read]
+- scope: dpv:FraudPreventionAndDetection
+  description: >-
+    W3C Data Privacy Vocabulary purpose scope declaring that the personal data is processed for
+    fraud prevention and detection. CAMARA requires a dpv purpose alongside the API scope.
+  kind: purpose
+  operations: [verify, read]
+- scope: number-verification:verify
+  description: >-
+    Verify that a supplied phone number matches the phone number of the device holding the
+    authenticated SIM. Backs POST /number-verification/v2/verify.
+  kind: api
+  operations: [verify]
+- scope: number-verification:device-phone-number:read
+  description: >-
+    Retrieve the phone number of the device holding the authenticated SIM (number share). Backs
+    GET /number-verification/v2/device-phone-number.
+  kind: api
+  operations: [read]
+scope_sets:
+- operation: verify
+  property: com.adunaglobal.sdk.backend.api.numberVerification.verifyScopes
+  value: openid dpv:FraudPreventionAndDetection number-verification:verify
+- operation: read
+  property: com.adunaglobal.sdk.backend.api.numberVerification.readScopes
+  value: openid dpv:FraudPreventionAndDetection number-verification:device-phone-number:read

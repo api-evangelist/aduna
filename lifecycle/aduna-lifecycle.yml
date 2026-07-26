@@ -1,0 +1,72 @@
+generated: '2026-07-25'
+method: searched
+source: https://github.com/adunaglobal/nv2-asp-server-java-aduna-sdk
+note: >-
+  Aduna maintains an API lifecycle page (docs.adunaglobal.com/api-lifecycle) but every path on that
+  host redirects to the Auth0 login wall, so nothing of its content is public. What follows is what
+  Aduna's public surface actually evidences. No status page, no SLA and no deprecation policy could
+  be found publicly, so no StatusPage or Deprecation pointer is emitted for this provider.
+versioning:
+  scheme: uri-path
+  pattern: /number-verification/v{major}/...
+  current: v2
+  camara_release: r3.2 / v2.1
+  aduna_authorization_apis: v1.4.0
+  policy_url: https://docs.adunaglobal.com/api-lifecycle
+  policy_public: false
+  note: >-
+    Aduna follows the CAMARA release train — an API version is pinned to a CAMARA meta-release, and
+    the SDK README publishes an explicit compatibility table binding SDK version to Aduna
+    Authorization API version and CAMARA API release.
+  source: https://github.com/adunaglobal/nv2-asp-server-java-aduna-sdk#adunacamara-release-compatibility
+deprecation:
+  policy_url: null
+  policy_public: false
+  sunset_header: unknown
+  note: No deprecation policy, Sunset/Deprecation header support (RFC 8594) or end-of-life schedule is published.
+sla:
+  url: null
+  uptime_target: null
+  note: No SLA is published; availability commitments are set in the partner contract.
+status_page:
+  url: null
+  probes:
+  - {url: 'https://status.adunaglobal.com/', status: DNS does not resolve}
+  - {url: 'https://trust.adunaglobal.com/', status: DNS does not resolve}
+  note: No public status or incident page exists.
+availability:
+  url: https://adunaglobal.com/work-with-us/availability/
+  note: >-
+    Aduna's public substitute for a roadmap: a per-API and per-market table splitting "live or in
+    development" from "available soon", plus the operator set. This is the only forward-looking
+    lifecycle signal Aduna publishes.
+  live_or_in_development: [Number Verification, SIM Swap, KYC Match]
+  available_soon:
+  - Device Swap
+  - Call Forwarding Signal
+  - Scam Signal
+  - SIM Swap Subscriptions
+  - KYC Tenure
+  - Number Recycling
+  - Device Reachability Status
+  - Device Roaming Status
+  - Device Reachability Status Subscription
+  - Device Roaming Status Subscription
+  - Device Location Verification
+  - Device Location Retrieval
+  - Device Geofencing Subscription
+  - Quality on Demand
+  - Connectivity Insights
+  - Dedicated Networks
+  - Population Density
+  - Region Device Count
+  - Rain Attenuation
+sdk_lifecycle:
+  support: >-
+    "Support is provided on a best-effort basis via repository-specific issue trackers" — Aduna
+    GitHub organisation profile. Release history is captured in changelog/aduna-changelog.yml.
+  license: source-available proprietary, per-repository licence agreement (not OSI open source)
+deprecated_operations: []
+related:
+  changelog: changelog/aduna-changelog.yml
+  conventions: conventions/aduna-conventions.yml

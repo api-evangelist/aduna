@@ -1,0 +1,101 @@
+generated: '2026-07-25'
+method: searched
+source: https://github.com/adunaglobal
+note: >-
+  Aduna publishes no product changelog on adunaglobal.com and its API lifecycle page
+  (docs.adunaglobal.com/api-lifecycle) is behind the portal login wall. The only public dated
+  change history Aduna maintains is the GitHub release stream on its five source-available SDK
+  repositories, captured verbatim below. Platform-side API versions are visible only through the
+  SDK's release-compatibility table (Aduna Authorization APIs v1.4.0, CAMARA Number Verification
+  r3.2 / v2.1).
+scheme: semver (per SDK repository)
+current:
+  aduna_authorization_apis: v1.4.0
+  camara_number_verification: r3.2 / v2.1
+  java_sdk: 1.1.0
+  web_sdk: 0.1.2
+  android_sdk: 0.1.2
+  ios_sdk: 0.1.1
+  cac_ios_sdk: 0.10.0
+entries:
+- component: cac-ios-aduna-sdk
+  version: 0.10.0
+  date: '2026-07-07'
+  highlights: [Weak linking is supported]
+  breaking: false
+- component: nv2-asp-server-java-aduna-sdk
+  version: 1.1.0
+  date: '2026-06-23'
+  highlights: [Support of dual SIM]
+  additions: [Dual-SIM handling on both verify and read via allowMultipleOperatorTokensOnVerify / allowMultipleOperatorTokensOnRead]
+  breaking: false
+- component: nv2-asp-web-aduna-sdk
+  version: 0.1.2
+  date: '2026-06-23'
+  highlights: [Bug fixing and performance improvements]
+  breaking: false
+- component: nv2-asp-android-aduna-sdk
+  version: 0.1.2
+  date: '2026-06-22'
+  highlights: ['Bugfix: move claims into dcql_query.credentials']
+  breaking: false
+- component: cac-ios-aduna-sdk
+  version: 0.9.0
+  date: '2026-06-12'
+  highlights: [Security enhancements (x5u support), Performance improvements, Support of dual SIM]
+  breaking: false
+- component: nv2-asp-server-java-aduna-sdk
+  version: 1.0.1
+  date: '2026-04-09'
+  highlights: [Update of copyright]
+  breaking: false
+- component: nv2-asp-ios-aduna-sdk
+  version: 0.1.1
+  date: '2026-04-09'
+  highlights: [Support of device-phone-number retrieval for network-based authentication]
+  breaking: false
+- component: nv2-asp-web-aduna-sdk
+  version: 0.1.1
+  date: '2026-04-09'
+  highlights: [Support of network-based authentication for device-phone-number]
+  breaking: false
+- component: nv2-asp-android-aduna-sdk
+  version: 0.1.1
+  date: '2026-04-06'
+  highlights: [Support of device-phone-number retrieval for network-based authentication]
+  breaking: false
+- component: nv2-asp-server-java-aduna-sdk
+  version: 1.0.0
+  date: '2026-04-02'
+  highlights: [Introduce ASP SDK for SIM-based and network-based authentication]
+  breaking: false
+- component: nv2-asp-web-aduna-sdk
+  version: 0.1.0
+  date: '2026-04-02'
+  highlights: [Introduce ASP SDK for SIM-based and network-based authentication]
+  breaking: false
+- component: nv2-asp-android-aduna-sdk
+  version: 0.1.0
+  date: '2026-04-02'
+  highlights: [Introduce ASP SDK for SIM-based and network-based authentication]
+  breaking: false
+- component: nv2-asp-ios-aduna-sdk
+  version: 0.1.0
+  date: '2026-04-02'
+  highlights: [ASP SDK with Number Verification 2 using SIM-based and network-based authentication]
+  breaking: false
+- component: cac-ios-aduna-sdk
+  version: 0.8.10
+  date: '2026-03-02'
+  highlights: [Solution optimization and bug fixing]
+  breaking: false
+- component: cac-ios-aduna-sdk
+  version: 0.8.9
+  date: '2026-02-20'
+  highlights: [Update license file and editorial changes]
+  breaking: false
+- component: cac-ios-aduna-sdk
+  version: 0.8.7
+  date: '2026-02-03'
+  highlights: [Initial release for Number Verification version 2]
+  breaking: false

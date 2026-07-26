@@ -1,0 +1,67 @@
+# Aduna
+
+> Aduna is the Ericsson-led network API joint venture — a 50:50 company owned half by Ericsson and half by twelve global communications service providers (AT&T, Bharti Airtel, Deutsche Telekom, KDDI, Orange, Reliance Jio, Singtel, Telefonica, Telstra, T-Mobile, Verizon, Vodafone), with e& added later as an equity partner. It aggregates CAMARA-standardised mobile network APIs from many carriers into one commercial channel so developers do not have to negotiate operator by operator.
+
+Aduna's developer surface is partner-gated. adunaglobal.com describes the API catalogue in prose; docs.adunaglobal.com redirects every path to an Auth0 login wall at portal.adunaglobal.com; there is no public OpenAPI, no sandbox, no self-serve signup, no published base URL and no published pricing. Onboarding is a sales conversation: Aduna's own SDK README says "Contact Aduna Global for the onboarding procedure of an ASP Application." Developers most often reach Aduna-aggregated APIs through partner platforms (Google Cloud, Infobip, Sinch, Vonage, Microsoft Azure and the Azure Marketplace, Comviva on AWS, Bridge Alliance) rather than through Aduna directly.
+
+The one genuinely open surface is a set of five source-available first-party SDK repositories on GitHub for CAMARA Number Verification v2 — the only place Aduna's real endpoints, OAuth scopes and CIBA flow are publicly visible.
+
+## APIs
+
+- [Aduna Number Verification API](https://adunaglobal.com/api-segments/security/): CAMARA Number Verification v2.1 — verify a phone number against the carrier network, or read the device phone number, as a replacement for SMS one-time passwords. Live across AT&T, T-Mobile and Verizon in the United States.
+- [Aduna SIM Swap API](https://adunaglobal.com/api-segments/security/): CAMARA SIM Swap — real-time information about recent SIM changes for account-takeover detection.
+- [Aduna KYC Match API](https://adunaglobal.com/api-segments/identity/): CAMARA KYC Match — compare supplied identity attributes against operator-held KYC data without returning PII.
+
+## Confirmed endpoints (from Aduna's own SDK source; base URL supplied at onboarding)
+
+- POST {baseURL}/auth/auth-info — discover the available authorization options for a phone number or PLMN
+- POST {baseURL}/auth/bc-authorize — CIBA backchannel authentication
+- POST {baseURL}/auth/token — token endpoint (authorization code, JWT-Bearer, CIBA)
+- POST {baseURL}/number-verification/v2/verify — verify a phone number against the device
+- GET {baseURL}/number-verification/v2/device-phone-number — read the device phone number
+
+## Authorization
+
+- Scopes: `openid`, `dpv:FraudPreventionAndDetection`, `number-verification:verify`, `number-verification:device-phone-number:read`
+- Flows: network-based (OAuth 2.0 authorization code), SIM-based JWT-Bearer (recommended, RFC 7523), SIM-based CIBA
+- Required headers: `Authorization`, `X-Correlator` (random UUID per request)
+
+## SDKs
+
+- [Java backend SDK](https://github.com/adunaglobal/nv2-asp-server-java-aduna-sdk) — Spring Boot / Feign, richest public technical artifact
+- [Web SDK](https://github.com/adunaglobal/nv2-asp-web-aduna-sdk) — TypeScript
+- [Android SDK](https://github.com/adunaglobal/nv2-asp-android-aduna-sdk) — Kotlin
+- [iOS SDK](https://github.com/adunaglobal/nv2-asp-ios-aduna-sdk) — Swift
+- [iOS carrier authentication XCFramework](https://github.com/adunaglobal/cac-ios-aduna-sdk) — Swift
+
+All five are source-available under a proprietary Aduna licence and are NOT published to npm, Maven Central or CocoaPods.
+
+## API Evangelist artifacts
+
+- [apis.yml](https://raw.githubusercontent.com/api-evangelist/aduna/refs/heads/main/apis.yml)
+- [Authentication profile](https://raw.githubusercontent.com/api-evangelist/aduna/refs/heads/main/authentication/aduna-authentication.yml)
+- [OAuth scopes](https://raw.githubusercontent.com/api-evangelist/aduna/refs/heads/main/scopes/aduna-scopes.yml)
+- [API conventions](https://raw.githubusercontent.com/api-evangelist/aduna/refs/heads/main/conventions/aduna-conventions.yml)
+- [Error model](https://raw.githubusercontent.com/api-evangelist/aduna/refs/heads/main/errors/aduna-problem-types.yml)
+- [Data model](https://raw.githubusercontent.com/api-evangelist/aduna/refs/heads/main/data-model/aduna-data-model.yml)
+- [Conformance](https://raw.githubusercontent.com/api-evangelist/aduna/refs/heads/main/conformance/aduna-conformance.yml)
+- [Lifecycle](https://raw.githubusercontent.com/api-evangelist/aduna/refs/heads/main/lifecycle/aduna-lifecycle.yml)
+- [Changelog](https://raw.githubusercontent.com/api-evangelist/aduna/refs/heads/main/changelog/aduna-changelog.yml)
+- [Packages](https://raw.githubusercontent.com/api-evangelist/aduna/refs/heads/main/packages/aduna-packages.yml)
+- [Well-known index](https://raw.githubusercontent.com/api-evangelist/aduna/refs/heads/main/well-known/aduna-well-known.yml)
+- [Domain security](https://raw.githubusercontent.com/api-evangelist/aduna/refs/heads/main/security/aduna-domain-security.yml)
+
+## Docs
+
+- [Website](https://adunaglobal.com/)
+- [Developer documentation (login required)](https://docs.adunaglobal.com/)
+- [Developer portal (login required)](https://portal.adunaglobal.com/)
+- [API availability by market and API](https://adunaglobal.com/work-with-us/availability/)
+- [GitHub organisation](https://github.com/adunaglobal)
+- [Upstream CAMARA Number Verification specification](https://github.com/camaraproject/NumberVerification/blob/r3.2/code/API_definitions/number-verification.yaml)
+
+## Notes for agents
+
+- There is no public OpenAPI, no MCP server, no GraphQL surface, no webhook or AsyncAPI contract and no sandbox. Do not assume a base URL — it is issued per partner at onboarding.
+- Idempotency is not documented on any Aduna endpoint. The SDK deliberately re-issues a verify request with a second operator token in dual-SIM scenarios.
+- Errors use the CAMARA envelope `{status, code, message}` on resource calls and the OAuth 2.0 `{error, error_description}` envelope on `/auth/*` calls — not RFC 9457.
