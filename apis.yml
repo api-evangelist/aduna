@@ -117,6 +117,8 @@ apis:
   - type: APIReference
     url: https://docs.adunaglobal.com/
 common:
+- type: Releases
+  url: https://github.com/adunaglobal/nv2-asp-server-java-aduna-sdk/releases
 - type: Authentication
   url: authentication/aduna-authentication.yml
 - type: OAuthScopes
