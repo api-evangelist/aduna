@@ -20,6 +20,18 @@ description: >-
   genuinely open surface is a small set of source-available first-party SDK repositories on GitHub
   for CAMARA Number Verification v2, which are the only place Aduna's real endpoints, OAuth scopes
   and CIBA flow are publicly visible.
+deliveryModel:
+  model: unknown
+  open_source: unknown
+  commercial: true
+  callable_host: false
+  label: Delivery model not determined — needs a product licence on record
+  confidence: low
+  source:
+  - pricing
+  - repository-unlicensed
+  generated: '2026-08-28'
+  method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
 - Telecommunications
