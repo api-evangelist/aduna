@@ -1,4 +1,4 @@
-# Aduna (aduna)
+# Aduna
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,112 +64,100 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Aduna is the Ericsson-led network API joint venture — a 50:50 company owned half by Ericsson (Stockholm, Sweden) and half by twelve global communications service providers including AT&T, Bharti Airtel, Deutsche Telekom, KDDI, Orange, Reliance Jio, Singtel, Telefonica, Telstra, T-Mobile, Verizon and Vodafone, with e& added later as an equity partner. Announced from Stockholm and incorporated as Aduna Global, LLC, it exists to aggregate CAMARA-standardised mobile network APIs from many carriers into one commercial channel so that developers do not have to negotiate operator by operator.
+Aduna is the Ericsson-led network API joint venture — a 50:50 company owned half by Ericsson (Stockholm, Sweden) and half by twelve global communications service providers including AT&T, Bharti Airtel, Deutsche Telekom, KDDI, Orange, Reliance Jio, Singtel, Telefonica, Telstra, T-Mobile, Verizon and Vodafone, with e& added later as an equity partner. Announced from Stockholm and incorporated as Aduna Global, LLC, it exists to aggregate CAMARA-standardised mobile network APIs from many carriers into one commercial channel so that developers do not have to negotiate operator by operator. Aduna sits in the exposure layer of the telecom value chain: it does not own spectrum and it does not sell to developers directly at scale — it aggregates operator capability and reaches the market through partner platforms (Google Cloud, Infobip, Sinch, Vonage, Microsoft Azure and the Azure Marketplace, Comviva on AWS, Bridge Alliance). Its API posture is honestly partner-gated. The public website documents an API catalogue in prose but publishes no OpenAPI, no sandbox and no self-serve signup; the developer documentation at docs.adunaglobal.com redirects every path to an Auth0 login wall at portal.adunaglobal.com, and the SDK onboarding instruction is to contact Aduna Global. The one genuinely open surface is a small set of source-available first-party SDK repositories on GitHub for CAMARA Number Verification v2, which are the only place Aduna's real endpoints, OAuth scopes and CIBA flow are publicly visible.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/aduna/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/aduna/refs/heads/main/apis.yml)
+**Areas:** Telecommunications · Sweden · Network APIs · CAMARA · Open Gateway · API Aggregator · Identity Verification · SIM Swap · Number Verification · Fraud Prevention · Quality on Demand · Device Location
 
-## Tags
+## Aduna on APIs.io
 
-- Telecommunications
-- Sweden
-- Network APIs
-- CAMARA
-- Open Gateway
-- API Aggregator
-- Identity Verification
-- SIM Swap
-- Number Verification
-- Fraud Prevention
-- Quality on Demand
-- Device Location
-- Ericsson
+Everything profiled for Aduna is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/aduna/](https://apis.io/providers/aduna/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (3)
 
-- **Created:** 2026-07-25
-- **Modified:** 2026-07-25
+- [Aduna Number Verification API](https://apis.io/apis/aduna/aduna-number-verification-api/) — Aduna's aggregated implementation of the CAMARA Number Verification API (v2.1), confirming possession of a mobile phone number in real time by verifying it…
+- [Aduna SIM Swap API](https://apis.io/apis/aduna/aduna-sim-swap-api/) — Aduna's aggregated implementation of the CAMARA SIM Swap API, returning real-time information about recent SIM card changes associated with a mobile phone…
+- [Aduna KYC Match API](https://apis.io/apis/aduna/aduna-kyc-match-api/) — Aduna's aggregated implementation of the CAMARA KYC Match API, comparing customer-supplied identity attributes — name, phone number, birthdate, address,…
 
-## The API posture, honestly
+### Published properties
 
-Aduna sits in the exposure layer of the telecom value chain. It does not own spectrum, and it does not sell to developers directly at scale — it aggregates operator capability and reaches the market through partner platforms: Google Cloud, Infobip, Sinch, Vonage, Microsoft Azure and the Azure Marketplace, Comviva on AWS, and Bridge Alliance.
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-The developer surface is partner-gated:
+#### Security (3)
 
-- `https://adunaglobal.com/` (**200**) is a marketing site. It names its API catalogue in prose across six segment pages and publishes no technical artifacts.
-- `https://docs.adunaglobal.com/` (**302 → login**) is GitBook-hosted, and every path — including `/robots.txt` and `/sitemap.xml` — redirects to an Auth0 login wall.
-- `https://portal.adunaglobal.com/` (**200**) is an Angular single-page app that renders nothing without authentication. `/openapi.json`, `/swagger.json`, `/api-docs` and `/docs` all return the same SPA shell, not a specification.
-- `https://adunaglobal.com/openapi.json` returns **404**. `api.adunaglobal.com`, `developer.adunaglobal.com` and `developers.adunaglobal.com` do not resolve.
-- The domain `aduna.global` does not resolve at all. The real primary domain is `adunaglobal.com`.
+Authentication, trust centre, and vulnerability disclosure.
 
-There is **no public OpenAPI, no sandbox, no self-serve signup, no published base URL, no pricing and no rate-limit documentation.** Aduna's own SDK README states the onboarding procedure plainly: *"Contact Aduna Global for the onboarding procedure of an ASP Application."*
+- [Aduna Authentication](https://apis.io/security/aduna/aduna-authentication/)
+- [Aduna Domain Security](https://apis.io/security/aduna/aduna-domain-security/)
+- [Aduna Vulnerability Disclosure](https://apis.io/security/aduna/aduna-vulnerability-disclosure/)
 
-## What IS public
+#### OAuth scopes (1)
 
-The one genuinely open surface is [github.com/adunaglobal](https://github.com/adunaglobal) — six public repositories, five of them source-available first-party SDKs for CAMARA Number Verification v2 (Java/Spring Boot, Kotlin/Android, Swift/iOS, TypeScript/web, and an iOS XCFramework). They are source-available under a proprietary Aduna license, not open source, and are not published to npm or Maven Central.
+The permissions the API asks for.
 
-Those repositories are the only place Aduna's real technical contract is visible:
+- [Aduna Scopes](https://apis.io/scopes/aduna/aduna-scopes/)
 
-| Confirmed from first-party SDK source | |
-| --- | --- |
-| `POST {baseURL}/auth/auth-info` | authentication options for a number or PLMN |
-| `POST {baseURL}/auth/bc-authorize` | **CIBA** backchannel authentication |
-| `POST {baseURL}/auth/token` | token exchange |
-| `POST {baseURL}/number-verification/v2/verify` | CAMARA Number Verification v2.1 verify |
-| `GET {baseURL}/number-verification/v2/device-phone-number` | CAMARA Number Verification v2.1 read |
+## Where to find this API
 
-Confirmed OAuth scopes: `openid`, `dpv:FraudPreventionAndDetection`, `number-verification:verify`, `number-verification:device-phone-number:read`. Confirmed headers: `Authorization`, `X-Correlator`. The base URL is a configuration property injected at onboarding and is not published — no host is asserted here because none is public.
-
-## CAMARA posture
-
-**Commercial aggregator of CAMARA APIs with live deployments, everything else partner-gated.** This is an implementation, not a press release: Number Verification is live across AT&T, T-Mobile and Verizon in the United States as of July 2026, and the SDKs prove a working contract with a real CIBA flow.
-
-**Live or in development:** Number Verification, SIM Swap, KYC Match.
-
-**Announced roadmap:** Device Swap, Call Forwarding Signal, Scam Signal, SIM Swap Subscriptions, KYC Tenure, Number Recycling, Device Reachability Status, Device Roaming Status (and their subscription variants), Device Location Verification, Device Location Retrieval, Device Geofencing Subscription, Quality on Demand, Connectivity Insights, Dedicated Networks, Population Density, Region Device Count, Rain Attenuation.
-
-**Markets live:** United States, Germany, Spain, Canada, France, Netherlands. **Announced:** Australia, Brazil, India, Greece, Singapore, Thailand, United Kingdom. Aduna states aggregation across 40 mobile operators.
-
-**GSMA Open Gateway:** Aduna is not an operator and is not an Open Gateway signatory. Its GitHub organisation profile names GSMA Open Gateway as an ecosystem it builds upon, and all twelve of its CSP shareholders are Open Gateway operators. Aduna is the commercial aggregation channel *for* Open Gateway, not a member *of* it.
-
-**TM Forum:** no Open API conformance certification claimed anywhere. **3GPP:** no NEF/SCEF, slicing or MEC surface published.
-
-## APIs
-
-### Aduna Number Verification API
-
-Aduna's aggregated implementation of the CAMARA Number Verification API (v2.1), confirming possession of a mobile phone number in real time by verifying it directly against the carrier network, as a replacement for SMS one-time passwords.
-
-- **Human URL:** [https://adunaglobal.com/api-segments/security/](https://adunaglobal.com/api-segments/security/)
-
-#### Properties
-
-- [Documentation](https://adunaglobal.com/api-segments/security/)
-- [API Reference](https://docs.adunaglobal.com/how-to-enable-an-api/number-verification-api-v-2.1-landing-page) — gated
-- [SDK — Java](https://github.com/adunaglobal/nv2-asp-server-java-aduna-sdk)
-- [SDK — Android](https://github.com/adunaglobal/nv2-asp-android-aduna-sdk)
-- [SDK — iOS](https://github.com/adunaglobal/nv2-asp-ios-aduna-sdk)
-- [SDK — Web](https://github.com/adunaglobal/nv2-asp-web-aduna-sdk)
-- [SDK — iOS XCFramework](https://github.com/adunaglobal/cac-ios-aduna-sdk)
-- [Upstream CAMARA specification](https://github.com/camaraproject/NumberVerification/blob/r3.2/code/API_definitions/number-verification.yaml) — CAMARA-published, not Aduna-published
-
-### Aduna SIM Swap API
-
-Real-time information about recent SIM card changes associated with a mobile phone number, so an application can detect account-takeover risk and trigger additional checks.
-
-- **Human URL:** [https://adunaglobal.com/api-segments/security/](https://adunaglobal.com/api-segments/security/)
-
-### Aduna KYC Match API
-
-Compares customer-supplied identity attributes against the verified KYC data held by the user's mobile network operator, returning match results without returning personally identifiable information to the caller.
-
-- **Human URL:** [https://adunaglobal.com/api-segments/identity/](https://adunaglobal.com/api-segments/identity/)
-
-## Links
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://adunaglobal.com/)
-- [Documentation](https://docs.adunaglobal.com/) — gated
-- [Developer Portal](https://portal.adunaglobal.com/) — Auth0 login wall
-- [GitHub Organization](https://github.com/adunaglobal)
-- [LinkedIn](https://www.linkedin.com/company/adunaglobal/)
-- [Availability](https://adunaglobal.com/work-with-us/availability/)
-- [Newsroom](https://adunaglobal.com/resources/?contentType=Newsroom)
+- [Documentation](https://docs.adunaglobal.com/)
+- [Support](https://adunaglobal.com/contact-us/)
+- [Blog](https://adunaglobal.com/resources/)
+- [Security](https://github.com/adunaglobal)
+- [Terms of service](https://adunaglobal.com/terms-of-use/)
+- [Privacy policy](https://adunaglobal.com/privacy-notice/)
+- [GitHub](https://github.com/adunaglobal)
+
+## API Evangelist rating
+
+**Kin Score 32.3** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 70.5 |
+| Contract quality | 0.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 36.8 |
+| Developer ergonomics | 45.2 |
+| Access clarity | 27.6 |
+
+**Agent readiness 11.5** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | — |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 45.0** — Telecommunications
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/aduna/](https://apis.io/providers/aduna/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Aduna: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/aduna/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
